@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>🎅 Santa's Christmas Card</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: linear-gradient(#0b1d3a, #1c3b6f);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Segoe UI", sans-serif;
+        overflow: hidden;
+        color: #fff;
+    }
+
+    .card-container {
+        text-align: center;
+        z-index: 2;
+    }
+
+    .open-btn {
+        background: #c62828;
+        color: white;
+        border: none;
+        padding: 14px 28px;
+        font-size: 18px;
+        border-radius: 25px;
+        cursor: pointer;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+    }
+
+    .card {
+        width: 90%;
+        max-width: 360px;
+        background: #fff;
+        color: #333;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        display: none;
+        animation: fadeIn 1.2s ease;
+    }
+
+    h2 {
+        color: #c62828;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.8); }
+        to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* ❄ Snow */
+    .snow {
+        position: absolute;
+        top: -10px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.8;
+        animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+        to {
+            transform: translateY(110vh);
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- ❄ 눈 -->
+<script>
+for (let i = 0; i < 50; i++) {
+    const snow = document.createElement("div");
+    snow.className = "snow";
+    snow.style.left = Math.random() * 100 + "vw";
+    snow.style.width = snow.style.height = Math.random() * 6 + 4 + "px";
+    snow.style.animationDuration = Math.random() * 5 + 5 + "s";
+    document.body.appendChild(snow);
+}
+</script>
+
+<div class="card-container">
+    <button class="open-btn" onclick="openCard()">🎁 카드 열기</button>
+
+    <div class="card" id="card">
+        <h2>🎄 Merry Christmas!</h2>
+        <p id="nameText"></p>
+        <p>
+            올 한 해 정말 수고 많았어 😊<br><br>
+            따뜻하고 행복한 크리스마스 보내고<br>
+            소중한 사람들과 웃음 가득한 시간 되길 바랄게!
+        </p>
+        <p style="margin-top:15px;">- 🎅 산타가</p>
+    </div>
+</div>
+
+<!-- 🎵 캐롤 -->
+<audio id="bgm" loop>
+    <source src="christmas-music-455383.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function openCard() {
+    document.querySelector(".open-btn").style.display = "none";
+    document.getElementById("card").style.display = "block";
+    document.getElementById("bgm").play().catch(()=>{});
+}
+
+const params = new URLSearchParams(location.search);
+const name = params.get("name");
+
+document.getElementById("nameText").innerHTML =
+    name ? `<b>${name}</b>에게 🎁` : "특별한 당신에게 🎁";
+</script>
+
+</body>
+</html>
